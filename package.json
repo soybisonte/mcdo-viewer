@@ -5,13 +5,25 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "data:generate": "babel-node ./src/scripts/datagen.js"
   },
   "dependencies": {
+    "@babel/node": "^7.19.1",
+    "@carbon/vue": "^2.44.1",
+    "aws-sdk": "^2.1230.0",
     "core-js": "^3.6.5",
+    "danfojs-node": "^1.1.1",
+    "faker": "^6.6.6",
+    "fs": "^0.0.1-security",
+    "json-2-csv": "^3.17.2",
+    "mock-aws-s3": "^4.0.2",
+    "nock": "^13.2.9",
+    "plotly.js-dist-min": "^2.14.0",
     "vue": "^2.6.11"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.5.0",
     "@vue/cli-plugin-babel": "~4.5.15",
     "@vue/cli-plugin-eslint": "~4.5.15",
     "@vue/cli-service": "~4.5.15",
