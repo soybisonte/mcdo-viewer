@@ -15,7 +15,7 @@
 import Profiles from "@/assets/datasets/profiles.json"
 import * as dfd from "danfojs";
   export default {
-    name: 'HelloWorld',
+    name: 'Generals',
     data() {
       return {
         yourName: '',
@@ -36,9 +36,6 @@ import * as dfd from "danfojs";
         const demographic = df.loc({columns: ["age", "registeredAt"]})
         demographic.plot(this.$refs.demographicHist).hist()
         demographic.describe().print()
-        // const demoTable = demographic.describe()
-        // demoTable.plot(this.$refs.demographicDescribe).table()
-
         let transData = []
         Profiles.forEach((user,index) => {
           if(index < 30) {

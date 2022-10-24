@@ -1,13 +1,13 @@
 
 <template>
   <div class="sample">
-    <h1>Análisis de perfiles 30 días</h1>
-    <cv-button @click="onClick">Init</cv-button>
-    <br/>
-    <br/>
-    <div>{{descriptive}}</div>
-    <div ref="plot2"></div>
-    <div ref="plot1"></div>
+    <h1>Users General Balance</h1>
+    <cv-button @click="onClick">Init General Balance</cv-button>
+    <h2>clasificacion de todas las operaciones del mes</h2>
+    <div ref="transPieChart"></div>
+    <h2>Solo depositos</h2>
+    <div ref="deposits"></div>
+    <div ref="depositDescribe" ></div>
   </div>
 </template>
 
@@ -15,7 +15,7 @@
 import Profiles from "@/assets/datasets/profiles.json"
 import * as dfd from "danfojs";
   export default {
-    name: 'HelloWorld',
+    name: 'UserBalance',
     data() {
       return {
         yourName: '',
@@ -32,10 +32,7 @@ import * as dfd from "danfojs";
       },
       onClick() {
         this.visible = true;
-        let df = new dfd.DataFrame(Profiles)
-        const sub_df = df.loc({columns: ["age", "registeredAt"]})
-        sub_df.plot(this.$refs.plot1).hist()
-
+        
         let transData = []
         Profiles.forEach((user,index) => {
           if(index < 30) {
@@ -45,30 +42,28 @@ import * as dfd from "danfojs";
         let userTransactionDF =  new dfd.DataFrame(transData.flat(2))
         const subDF = userTransactionDF.loc({columns: ["timeStamp"]})
         subDF.applyMap(this.formatDate, {inplace:true})
-        const datesFormatted = subDF.getColumnData
-        userTransactionDF.addColumn("operationDate", datesFormatted[0], {inplace:true})
-        const layout = {
-            title: "A financial charts",
-            xaxis: {
-              title: "operationDate",
-            },
-            yaxis: {
-              title: "amount",
-            },
-          };
-
-          const config = {
-            columns: ["amount"],
-          };
         let grp = userTransactionDF.groupby(["transactionType"])
-        const deposits = grp.getGroup(['deposit'])
-        const depositsDF = deposits.loc({columns: ["operationDate", "amount"]})
         
-        depositsDF.print()
-        // console.log(depositsDF);
-        // depositsDF['timeStamp'].apply(this.formatDate)
-        // depositsDF.print()
-        depositsDF.plot(this.$refs.plot2).line(config, layout)
+        userTransactionDF.plot(this.$refs.transPieChart).pie({ config: { values: "amount", labels: "transactionType" } });
+
+        const depositIncomes = grp.getGroup(['deposit'])
+        const invoiceIncomes = grp.getGroup(['invoice'])
+        const withdrawalOutcomes = grp.getGroup(['withdrawal'])
+        const paymentOutcomes = grp.getGroup(['payment'])
+        
+        depositIncomes.describe().plot(this.$refs.depositDescribe).table()
+        
+        console.log('deposit describe');
+        depositIncomes.describe().print()
+        console.log('invoice describe');
+        invoiceIncomes.describe().print()
+        console.log('withdrawal describe');
+        withdrawalOutcomes.describe().print()
+        console.log('payment describe');
+        paymentOutcomes.describe().print()
+        
+        let depositsAmounts = depositIncomes.loc({columns:["amount"]})
+        depositsAmounts.plot(this.$refs.deposits).line()
       },
     },
   };
