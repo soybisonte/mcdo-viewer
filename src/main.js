@@ -3,6 +3,7 @@ import App from './App.vue'
 import 'carbon-components/css/carbon-components.css';
 import CarbonComponentsVue from '@carbon/vue';
 
+
 Vue.config.productionTip = false
 Vue.use(CarbonComponentsVue);
 
