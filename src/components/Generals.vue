@@ -6,8 +6,8 @@
     <br/>
     <br/>
     <div>{{descriptive}}</div>
-    <div ref="plot2"></div>
-    <div ref="plot1"></div>
+    <div ref="demographicHist"></div>
+    <div ref="demographicDescribe"></div>
   </div>
 </template>
 
@@ -33,8 +33,11 @@ import * as dfd from "danfojs";
       onClick() {
         this.visible = true;
         let df = new dfd.DataFrame(Profiles)
-        const sub_df = df.loc({columns: ["age", "registeredAt"]})
-        sub_df.plot(this.$refs.plot1).hist()
+        const demographic = df.loc({columns: ["age", "registeredAt"]})
+        demographic.plot(this.$refs.demographicHist).hist()
+        demographic.describe().print()
+        // const demoTable = demographic.describe()
+        // demoTable.plot(this.$refs.demographicDescribe).table()
 
         let transData = []
         Profiles.forEach((user,index) => {
@@ -42,33 +45,7 @@ import * as dfd from "danfojs";
             transData.push(user.transactions)
           }
         })
-        let userTransactionDF =  new dfd.DataFrame(transData.flat(2))
-        const subDF = userTransactionDF.loc({columns: ["timeStamp"]})
-        subDF.applyMap(this.formatDate, {inplace:true})
-        const datesFormatted = subDF.getColumnData
-        userTransactionDF.addColumn("operationDate", datesFormatted[0], {inplace:true})
-        const layout = {
-            title: "A financial charts",
-            xaxis: {
-              title: "operationDate",
-            },
-            yaxis: {
-              title: "amount",
-            },
-          };
 
-          const config = {
-            columns: ["amount"],
-          };
-        let grp = userTransactionDF.groupby(["transactionType"])
-        const deposits = grp.getGroup(['deposit'])
-        const depositsDF = deposits.loc({columns: ["operationDate", "amount"]})
-        
-        depositsDF.print()
-        // console.log(depositsDF);
-        // depositsDF['timeStamp'].apply(this.formatDate)
-        // depositsDF.print()
-        depositsDF.plot(this.$refs.plot2).line(config, layout)
       },
     },
   };
