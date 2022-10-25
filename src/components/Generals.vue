@@ -33,6 +33,7 @@ import * as dfd from "danfojs";
       onClick() {
         this.visible = true;
         let df = new dfd.DataFrame(Profiles)
+        // df.print();
         const demographic = df.loc({columns: ["age", "registeredAt"]})
         demographic.plot(this.$refs.demographicHist).hist()
         demographic.describe().print()
@@ -42,7 +43,8 @@ import * as dfd from "danfojs";
             transData.push(user.transactions)
           }
         })
-
+        let userTransactionDF =  new dfd.DataFrame(transData.flat(2))
+        userTransactionDF.print()
       },
     },
   };
