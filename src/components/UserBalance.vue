@@ -1,38 +1,79 @@
 
 <template>
-  <div class="sample">
-    <h1>Users General Balance</h1>
-    
-    <h2>Comportamiento Mesual y balance</h2>
-    <cv-number-input
-    v-model="userIndex"
-    :light="'light'"
-    value="0"
-    max="999"
-    min="0"
-    :label="`Introduce un indice de usuario`"
-    :helper-text="`selecciona un numero entre 0 y 999`">
-    </cv-number-input>
-    <br>
-    <br>
-    <br>
-    <cv-button @click="onClick">get Global Balance</cv-button>
-    <div id="plot_div"></div>
-  </div>
+  <cv-grid>
+    <cv-row>
+      <cv-column>
+        <h2>Comportamiento Mesual y balance</h2>
+      </cv-column>
+    </cv-row>
+    <cv-row>
+      <cv-column>
+        <div class="cv-grid-story__preview-col">
+            <Todos/> 
+            <cv-number-input
+            v-model="userIndex"
+            :light="'light'"
+            value="0"
+            max="9999"
+            min="0"
+            :label="`Introduce un indice de usuario`"
+            :helper-text="`selecciona un numero entre 0 y 9999`">
+            </cv-number-input>
+            <cv-button @click="onClick">get Global Balance</cv-button>
+        </div>
+      </cv-column>
+      <cv-column>
+        <div class="cv-grid-story__preview-col"></div>
+      </cv-column>
+    </cv-row>
+
+    <cv-row>
+        <cv-column>
+          <div class="cv-grid-story__preview-col">
+            <ccv-line-chart :data='userBalanceData' :options='options'></ccv-line-chart>
+          </div>
+        </cv-column>
+      </cv-row>
+  </cv-grid>
 </template>
 
 <script>
+import Todos from '@/components/Todos.vue'
 import Profiles from "@/assets/datasets/profiles.json"
 import * as dfd from "danfojs";
   export default {
     name: 'UserBalance',
+    components: {
+      Todos,
+    },
     data() {
       return {
         yourName: '',
         descriptive: null,
         visible: false,
-        userIndex: 0
-      };
+        userIndex: 0,
+        elements: [
+          {}
+        ],
+        userBalanceData: [],
+        options: {
+          "title": "Balance en tiempo (ultimos 120 días)",
+          "axes": {
+            "bottom": {
+						"title": "Fecha de la transaccion",
+						"mapsTo": "date",
+						"scaleType": "time"
+          },
+          "left": {
+            "mapsTo": "value",
+						"title": "Monto de la transaccion",
+						"scaleType": "linear"
+          }
+        },
+        // "curve": "curveMonotoneX",
+        "height": "400px"
+      }
+    };
     },
     mounted(){
     },
@@ -63,30 +104,42 @@ import * as dfd from "danfojs";
         
         const balance = dfd.concat({ dfList: [incomes, outcomes], axis: 0 })
         // console.log(outcomes["amount"]);
-        
+        balance.sortValues("operationDate", {ascending:true, inplace:true})
         balance.addColumn("amount_cum_sum", balance["amount"].cumSum(),{inplace:true})
-        balance.sortValues("timeStamp", {ascending:true, inplace:true})
         balance.print()
         const subDF = balance.loc({columns: ["operationDate","amount_cum_sum"]})
+        const balanceDataCarbon = balance.loc({columns: ["timeStamp","amount_cum_sum"]})
+        const jsonData = dfd.toJSON(balanceDataCarbon)
+
+        let updateData = []
+        jsonData.forEach(element => {
+          updateData.push({
+            "group": "balanceDataset 1",
+            "date": element["timeStamp"],
+            "value": element["amount_cum_sum"]
+          })
+        });
+        this.userBalanceData = updateData;
+        console.log(jsonData);
         subDF.print()
 
 
-        const layout = {
-            title: "Balance mensual",
-            xaxis: {
-              title: "Date",
-            },
-            yaxis: {
-              title: "Count",
-            },
-          };
+        // const layout = {
+        //     title: "Balance mensual",
+        //     xaxis: {
+        //       title: "Date",
+        //     },
+        //     yaxis: {
+        //       title: "Count",
+        //     },
+        //   };
 
-          const config = {
-            columns: ["amount_cum_sum"],
-          };
+        //   const config = {
+        //     columns: ["amount_cum_sum"],
+        //   };
 
-          const new_df = subDF.setIndex({ column: "operationDate" });
-          new_df.plot("plot_div").line({ config, layout });
+        //   const new_df = subDF.setIndex({ column: "operationDate" });
+        //   new_df.plot("plot_div").line({ config, layout });
       }
     },
   };
@@ -101,7 +154,9 @@ import * as dfd from "danfojs";
     max-width: 960px;
     margin: 5% auto;
   }
-
+  .half {
+    width: 50%;
+  }
   .cv-text-input {
     margin: 30px 0;
   }

@@ -10,10 +10,13 @@
   },
   "dependencies": {
     "@babel/node": "^7.19.1",
+    "@carbon/charts": "^1.6.1",
+    "@carbon/charts-vue": "^1.6.1",
     "@carbon/vue": "^2.44.1",
     "aws-sdk": "^2.1230.0",
     "chart.js": "^3.9.1",
     "core-js": "^3.6.5",
+    "d3": "^7.6.1",
     "danfojs": "^1.1.2",
     "danfojs-node": "^1.1.1",
     "faker": "^6.6.6",
