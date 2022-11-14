@@ -29,6 +29,10 @@ export default class UserBalance {
                 min: outcomes["amount"].min(),
             },
         }
+        this.means = {
+            incomeMean:  incomes["amount"].mean().toFixed(2),
+            outcomeMean:  outcomes["amount"].mean().toFixed(2),
+        }
 
         this.transactionsDistribution = [
             {
@@ -61,6 +65,12 @@ export default class UserBalance {
         
         const balanceDataCarbon = balance.loc({columns: ["timeStamp","amount_cum_sum"]})
         const jsonData = dfd.toJSON(balanceDataCarbon)
+        const timeStampSeries = new dfd.Series(balanceDataCarbon["timeStamp"].values)
+        const hoursOnly = timeStampSeries.dt.hours()
+        console.log(hoursOnly.mode());
+        this.frequentOperationHour = hoursOnly.mode()
+        // const onlyHours = hoursTemp.apply(this.hoursOnly, { axis: 1 })
+        // onlyHours.describe().print()
         return jsonData
     }
 }

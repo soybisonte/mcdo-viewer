@@ -9,7 +9,7 @@
     <cv-row>
       <cv-column>
         <div class="cv-grid-story__preview-col">
-            <Todos/> 
+            <!-- <Todos/>  -->
             <cv-number-input
             v-model="userIndex"
             :light="'light'"
@@ -41,6 +41,14 @@
             <div class="wrapper">
               <h3>Min outcome: {{user.transMaxMin.outcomes.min}}</h3> 
             </div>
+            <div class="wrapper">
+              <h3>Horas frecuentes de operacion: 
+                <span v-for="(hour, index) in user.frequentOperationHour" :key="index">
+                  {{hour}}H,
+                </span>
+              </h3> 
+            </div>
+            <cv-data-table :columns="characteristics.columns" :data="characteristics.generals"   ref="table"></cv-data-table>
             <ccv-meter-chart :data='user.transDist' :options='baroptions'></ccv-meter-chart>
             <ccv-line-chart :data='userBalanceData' :options='options'></ccv-line-chart>
           </div>
@@ -50,7 +58,7 @@
 </template>
 
 <script>
-import Todos from '@/components/Todos.vue'
+// import Todos from '@/components/Todos.vue'
 import UserBalance from '@/scripts/UserBalance.js'
 // import Gauge from "@/components/Gauge.vue"
 // import HeatMap from "@/components/HeatMap.vue"
@@ -58,7 +66,7 @@ import UserBalance from '@/scripts/UserBalance.js'
   export default {
     name: 'UserBalance',
     components: {
-      Todos,
+      // Todos,
       // Gauge,
       // HeatMap,
     },
@@ -71,9 +79,31 @@ import UserBalance from '@/scripts/UserBalance.js'
         elements: [
           {}
         ],
+        characteristics: {
+          columns: [
+            "Final Balance", 
+            "Incomes Mean",
+            "Outcomes Mean",
+            "Max Income",
+            "Min Income",
+            "Max Outcome",
+            "Min Outcome",
+            "Frequent Operation Hour",
+          ],
+          generals: [[
+          0, 
+           0,
+            0,
+            0,
+            0,
+            0
+          ]
+          ]
+        },
         userBalanceData: [],
         user: {
           balance: 0,
+          frequentOperationHour: [],
           transDist: [
             {
               group: "null",
@@ -147,6 +177,17 @@ import UserBalance from '@/scripts/UserBalance.js'
         this.userBalanceData = updateData;
         this.user.transDist = user.transactionsDistribution
         this.user.transMaxMin = user.maxmin
+        this.user.frequentOperationHour = user.frequentOperationHour
+        this.characteristics.generals = [[
+          this.user.balance,
+          user.means.incomeMean,
+          user.means.outcomeMean,
+          this.user.transMaxMin.incomes.max,
+          this.user.transMaxMin.incomes.min,
+          this.user.transMaxMin.outcomes.max,
+          this.user.transMaxMin.outcomes.min,
+          this.user.frequentOperationHour[0],
+        ]]
         this.user.balance = this.userBalanceData.at(-1).value.toFixed(2)
       }
     },
