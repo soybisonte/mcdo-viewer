@@ -1,39 +1,28 @@
 
 <template>
-	<ccv-meter-chart :data='data' :options='options'></ccv-meter-chart>
+	<ccv-meter-chart :data='info' :options='options'></ccv-meter-chart>
 </template>
 
 <script>
 export default {
 	name: "ProportionBar",
+	props: ["config"],
 	components: {},
 	data() {
 		return {
-			data: [
+			info: [
 		{
-				"group": "emails",
-				"value": 202
-		},
-		{
-				"group": "photos",
-				"value": 654
-		},
-		{
-				"group": "text messages",
-				"value": 723
-		},
-		{
-				"group": "other",
-				"value": 120
+				"group": "Null",
+				"value": 0
 		}
-],
+	],
 			options: {
 		"title": "Proportional Meter Chart",
 		"height": "130px",
 		"meter": {
 				"proportional": {
-						"total": 2000,
-						"unit": "GB"
+						"total": 0,
+						"unit": "Transacciones"
 				}
 		},
 		"color": {

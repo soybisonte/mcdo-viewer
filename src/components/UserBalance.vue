@@ -22,22 +22,27 @@
             <cv-button @click="onClick">get Global Balance</cv-button>
         </div>
       </cv-column>
-      <cv-column>
-        <div class="cv-grid-story__preview-col">
-            <h2>aqui va la barra de proporción</h2>
-            <ProportionBar/>
-          </div>
-      </cv-column>
     </cv-row>
     <cv-row>
         <cv-column>
           <div class="cv-grid-story__preview-col">
+            <div class="wrapper">
+              <h2>Final balance: {{user.balance}}</h2> 
+            </div>
+            <div class="wrapper">
+              <h3>Max income: {{user.transMaxMin.incomes.max}}</h3> 
+            </div>
+            <div class="wrapper">
+              <h3>Min Income: {{user.transMaxMin.incomes.min}}</h3> 
+            </div>
+            <div class="wrapper">
+              <h3>Max outcome: {{user.transMaxMin.outcomes.max}}</h3> 
+            </div>
+            <div class="wrapper">
+              <h3>Min outcome: {{user.transMaxMin.outcomes.min}}</h3> 
+            </div>
+            <ccv-meter-chart :data='user.transDist' :options='baroptions'></ccv-meter-chart>
             <ccv-line-chart :data='userBalanceData' :options='options'></ccv-line-chart>
-          </div>
-        </cv-column>
-        <cv-column>
-          <div class="cv-grid-story__preview-col">
-            <HeatMap/>
           </div>
         </cv-column>
       </cv-row>
@@ -48,15 +53,14 @@
 import Todos from '@/components/Todos.vue'
 import UserBalance from '@/scripts/UserBalance.js'
 // import Gauge from "@/components/Gauge.vue"
-import HeatMap from "@/components/HeatMap.vue"
-import ProportionBar from "@/components/ProportionBar.vue"
+// import HeatMap from "@/components/HeatMap.vue"
+// import ProportionBar from "@/components/ProportionBar.vue"
   export default {
     name: 'UserBalance',
     components: {
       Todos,
       // Gauge,
-      HeatMap,
-      ProportionBar,
+      // HeatMap,
     },
     data() {
       return {
@@ -68,6 +72,25 @@ import ProportionBar from "@/components/ProportionBar.vue"
           {}
         ],
         userBalanceData: [],
+        user: {
+          balance: 0,
+          transDist: [
+            {
+              group: "null",
+              value: 0
+            }
+          ],
+          transMaxMin: {
+            incomes: {
+                max: 0,
+                min: 0,
+            },
+            outcomes: {
+                max: 0,
+                min: 0,
+            },
+        }
+        },
         options: {
           "title": "Balance en tiempo (ultimos 120 días)",
           "axes": {
@@ -84,7 +107,22 @@ import ProportionBar from "@/components/ProportionBar.vue"
         },
         // "curve": "curveMonotoneX",
         "height": "400px"
-      }
+      },
+      baroptions: {
+		"title": "Distribucion de transacciones",
+		"height": "130px",
+		"meter": {
+				"proportional": {
+						"total": 0,
+						"unit": "Transacciones"
+				}
+		},
+		"color": {
+				"pairing": {
+						"option": 3
+				}
+		}
+}
     };
     },
     mounted(){
@@ -97,7 +135,7 @@ import ProportionBar from "@/components/ProportionBar.vue"
       onClick() {
         const user = new UserBalance(this.userIndex)
         let updateData = []
-        let jsonData = user.generateTable()
+        let jsonData = user.generateBalanceTable()
         jsonData.forEach(element => {
           updateData.push({
             "group": "Dataset: Balance en el tiempo",
@@ -105,13 +143,21 @@ import ProportionBar from "@/components/ProportionBar.vue"
             "value": element["amount_cum_sum"]
           })
         });
+        
         this.userBalanceData = updateData;
+        this.user.transDist = user.transactionsDistribution
+        this.user.transMaxMin = user.maxmin
+        this.user.balance = this.userBalanceData.at(-1).value.toFixed(2)
       }
     },
   };
 </script>
 
 <style>
+.wrapper{
+  display: flex;
+  margin: 1em 0.5em;
+}
   .sample {
     display: flex;
     flex-direction: column;
