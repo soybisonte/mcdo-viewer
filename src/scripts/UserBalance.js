@@ -67,10 +67,23 @@ export default class UserBalance {
         const jsonData = dfd.toJSON(balanceDataCarbon)
         const timeStampSeries = new dfd.Series(balanceDataCarbon["timeStamp"].values)
         const hoursOnly = timeStampSeries.dt.hours()
-        console.log(hoursOnly.mode());
         this.frequentOperationHour = hoursOnly.mode()
+        this.finalBalance = balanceDataCarbon["amount_cum_sum"].tail(1).$data[0].toFixed(2)
+        
         // const onlyHours = hoursTemp.apply(this.hoursOnly, { axis: 1 })
         // onlyHours.describe().print()
         return jsonData
+    }
+    getVector () {
+        return [
+            Number(this.finalBalance),
+            Number(this.means.incomeMean),
+            Number(this.means.outcomeMean),
+            this.maxmin.incomes.max,
+            this.maxmin.incomes.min,
+            this.maxmin.outcomes.max,
+            this.maxmin.outcomes.min,
+            this.frequentOperationHour[0]
+        ]
     }
 }

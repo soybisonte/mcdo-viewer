@@ -3,7 +3,7 @@
   <cv-grid>
     <cv-row>
       <cv-column>
-        <h2>Comportamiento Mesual y balance</h2>
+        <h2>Comportamiento Mesual Individual</h2>
       </cv-column>
     </cv-row>
     <cv-row>

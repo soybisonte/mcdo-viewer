@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <UserBalance />
+    
+    <UsersVectors />
+    
   </div>
 </template>
 
@@ -8,14 +11,14 @@
 
 // import Generals from './components/Generals.vue'
 import UserBalance from './components/UserBalance.vue'
-// import UserProfile from './components/UserProfile.vue';
+import UsersVectors from './components/UsersVectors.vue';
 
 export default {
   name: 'App',
   components: {
     // Generals,
     UserBalance,
-    // UserProfile
+    UsersVectors
 }
 }
 </script>
