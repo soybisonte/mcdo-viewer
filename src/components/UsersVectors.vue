@@ -1,7 +1,7 @@
 
 <template>
   <div class="sample">
-    <h1>Create a new DF by preprocessing raw data</h1>
+    <h1>Create a new DF by preprocessing raw data from all profiles</h1>
     <cv-button @click="onClick">get vectors DF</cv-button>
   </div>
 </template>

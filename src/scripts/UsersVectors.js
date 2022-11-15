@@ -27,5 +27,6 @@ export default class UsersVector {
         ]
         const userVectorsDF = new dfd.DataFrame(userVectors, {columns: cols})
         userVectorsDF.print()
+        dfd.toCSV(userVectorsDF, { fileName: "fakeDataProfiles.csv", download: true})
     }
 }
