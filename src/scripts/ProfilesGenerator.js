@@ -1,6 +1,7 @@
 import { faker }  from '@faker-js/faker/locale/es_MX';
 import * as fs from 'fs';
-import { json2csv } from 'json-2-csv';
+import pkg from 'json-2-csv';
+const { json2csv } = pkg;
 
 export default class ProfilesGenerator {
   constructor(options) {

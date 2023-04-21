@@ -18,36 +18,33 @@
     "core-js": "^3.6.5",
     "d3": "^7.6.1",
     "danfojs": "^1.1.2",
-    "danfojs-node": "^1.1.1",
-    "faker": "^6.6.6",
+    "danfojs-node": "^1.1.2",
+    "faker": "^5.5.3",
     "fs": "^0.0.1-security",
     "json-2-csv": "^3.17.2",
     "json-loader": "^0.5.7",
     "mock-aws-s3": "^4.0.2",
     "nock": "^13.2.9",
     "plotly.js-dist-min": "^2.14.0",
+    "tf-kmeans": "^0.0.3",
     "vue": "^2.6.11",
     "vue-chartjs": "^4.1.2"
   },
   "devDependencies": {
     "@faker-js/faker": "^7.5.0",
-    "@vue/cli-plugin-babel": "~4.5.15",
-    "@vue/cli-plugin-eslint": "~4.5.15",
-    "@vue/cli-service": "~4.5.15",
+    "@vue/cli-plugin-babel": "^5.0.8",
+    "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vue/cli-service": "^5.0.8",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^6.2.2",
+    "eslint": "^8.38.0",
+    "eslint-plugin-vue": "6.2.2",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
-    "root": true,
+    "root": false,
     "env": {
-      "node": true
+      "node": false
     },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
     "parserOptions": {
       "parser": "babel-eslint"
     },
