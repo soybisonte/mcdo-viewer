@@ -1,6 +1,9 @@
 
 <template>
-	<ccv-line-chart :data='data' :options='options'></ccv-line-chart>
+  <ccv-line-chart
+    :data="data"
+    :options="options"
+  />
 </template>
 
 <script>

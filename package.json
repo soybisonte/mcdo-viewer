@@ -36,14 +36,14 @@
     "@vue/cli-plugin-eslint": "^5.0.8",
     "@vue/cli-service": "^5.0.8",
     "babel-eslint": "^10.1.0",
-    "eslint": "^8.38.0",
-    "eslint-plugin-vue": "6.2.2",
+    "eslint": "^8.39.0",
+    "eslint-plugin-vue": "^9.11.0",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
-    "root": false,
+    "root": true,
     "env": {
-      "node": false
+      "node": true
     },
     "parserOptions": {
       "parser": "babel-eslint"

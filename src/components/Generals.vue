@@ -2,12 +2,14 @@
 <template>
   <div class="sample">
     <h1>Análisis de perfiles 30 días</h1>
-    <cv-button @click="onClick">Init</cv-button>
-    <br/>
-    <br/>
-    <div>{{descriptive}}</div>
-    <div ref="demographicHist"></div>
-    <div ref="demographicDescribe"></div>
+    <cv-button @click="onClick">
+      Init
+    </cv-button>
+    <br>
+    <br>
+    <div>{{ descriptive }}</div>
+    <div ref="demographicHist" />
+    <div ref="demographicDescribe" />
   </div>
 </template>
 

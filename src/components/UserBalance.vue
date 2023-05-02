@@ -9,51 +9,67 @@
     <cv-row>
       <cv-column>
         <div class="cv-grid-story__preview-col">
-            <!-- <Todos/>  -->
-            <cv-number-input
+          <!-- <Todos/>  -->
+          <cv-number-input
             v-model="userIndex"
             :light="'light'"
             value="0"
             max="9999"
             min="0"
             :label="`Introduce un indice de usuario`"
-            :helper-text="`selecciona un numero entre 0 y 9999`">
-            </cv-number-input>
-            <cv-button @click="onClick">get Global Balance</cv-button>
+            :helper-text="`selecciona un numero entre 0 y 9999`"
+          />
+          <cv-button @click="onClick">
+            get Global Balance
+          </cv-button>
         </div>
       </cv-column>
     </cv-row>
     <cv-row>
-        <cv-column>
-          <div class="cv-grid-story__preview-col">
-            <div class="wrapper">
-              <h2>Final balance: {{user.balance}}</h2> 
-            </div>
-            <div class="wrapper">
-              <h3>Max income: {{user.transMaxMin.incomes.max}}</h3> 
-            </div>
-            <div class="wrapper">
-              <h3>Min Income: {{user.transMaxMin.incomes.min}}</h3> 
-            </div>
-            <div class="wrapper">
-              <h3>Max outcome: {{user.transMaxMin.outcomes.max}}</h3> 
-            </div>
-            <div class="wrapper">
-              <h3>Min outcome: {{user.transMaxMin.outcomes.min}}</h3> 
-            </div>
-            <div class="wrapper">
-              <h3>Horas frecuentes de operacion: 
-                <span v-for="(hour, index) in user.frequentOperationHour" :key="index">
-                  {{hour}}H,
-                </span>
-              </h3> 
-            </div>
-            <cv-data-table :columns="characteristics.columns" :data="characteristics.generals"   ref="table"></cv-data-table>
-            <ccv-meter-chart :data='user.transDist' :options='baroptions'></ccv-meter-chart>
-            <ccv-line-chart :data='userBalanceData' :options='options'></ccv-line-chart>
+      <cv-column>
+        <div class="cv-grid-story__preview-col">
+          <div class="wrapper">
+            <h2>Final balance: {{ user.balance }}</h2> 
           </div>
-        </cv-column>
-      </cv-row>
+          <div class="wrapper">
+            <h3>Max income: {{ user.transMaxMin.incomes.max }}</h3> 
+          </div>
+          <div class="wrapper">
+            <h3>Min Income: {{ user.transMaxMin.incomes.min }}</h3> 
+          </div>
+          <div class="wrapper">
+            <h3>Max outcome: {{ user.transMaxMin.outcomes.max }}</h3> 
+          </div>
+          <div class="wrapper">
+            <h3>Min outcome: {{ user.transMaxMin.outcomes.min }}</h3> 
+          </div>
+          <div class="wrapper">
+            <h3>
+              Horas frecuentes de operacion: 
+              <span
+                v-for="(hour, index) in user.frequentOperationHour"
+                :key="index"
+              >
+                {{ hour }}H,
+              </span>
+            </h3> 
+          </div>
+          <cv-data-table
+            ref="table"
+            :columns="characteristics.columns"
+            :data="characteristics.generals"
+          />
+          <ccv-meter-chart
+            :data="user.transDist"
+            :options="baroptions"
+          />
+          <ccv-line-chart
+            :data="userBalanceData"
+            :options="options"
+          />
+        </div>
+      </cv-column>
+    </cv-row>
   </cv-grid>
 </template>
 

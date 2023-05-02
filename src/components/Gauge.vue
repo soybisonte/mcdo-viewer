@@ -1,6 +1,9 @@
 
 <template>
-	<ccv-gauge-chart :data='data' :options='options'></ccv-gauge-chart>
+  <ccv-gauge-chart
+    :data="data"
+    :options="options"
+  />
 </template>
 
 <script>

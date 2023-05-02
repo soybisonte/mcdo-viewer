@@ -1,6 +1,9 @@
 
 <template>
-	<ccv-heatmap-chart :data='data' :options='options'></ccv-heatmap-chart>
+  <ccv-heatmap-chart
+    :data="data"
+    :options="options"
+  />
 </template>
 
 <script>

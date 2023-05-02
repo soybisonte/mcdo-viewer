@@ -2,7 +2,7 @@
   <div id="app">
     <UserBalance />
     <UsersVectors />
-    <Predictor></Predictor>
+    <DataPredictor />
   </div>
 </template>
 
@@ -11,7 +11,7 @@
 // import Generals from './components/Generals.vue'
 import UserBalance from './components/UserBalance.vue'
 import UsersVectors from './components/UsersVectors.vue';
-import Predictor from './components/Predictor.vue';
+import DataPredictor from './components/DataPredictor.vue';
 
 export default {
   name: 'App',
@@ -19,7 +19,7 @@ export default {
     // Generals,
     UserBalance,
     UsersVectors,
-    Predictor
+    DataPredictor
 }
 }
 </script>

@@ -1,13 +1,16 @@
 
 <template>
-	<ccv-meter-chart :data='info' :options='options'></ccv-meter-chart>
+  <ccv-meter-chart
+    :data="info"
+    :options="options"
+  />
 </template>
 
 <script>
 export default {
 	name: "ProportionBar",
-	props: ["config"],
 	components: {},
+	props: ["config"],
 	data() {
 		return {
 			info: [

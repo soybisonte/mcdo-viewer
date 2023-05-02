@@ -2,20 +2,22 @@
 <template>
   <cv-grid>
     <cv-row>
-        <cv-column>
-          <div class="cv-grid-story__preview-col">
-            <h1>Predictor</h1>
-            <cv-button @click="runPrediction">Predict</cv-button>
-          </div>
-        </cv-column>
-      </cv-row>
+      <cv-column>
+        <div class="cv-grid-story__preview-col">
+          <h1>Predictor</h1>
+          <cv-button @click="runPrediction">
+            Predict
+          </cv-button>
+        </div>
+      </cv-column>
+    </cv-row>
   </cv-grid>
 </template>
 
 <script>
 import Predictor from "@/scripts/Predictor.js"
   export default {
-    name: 'Predictor',
+    name: 'DataPredictor',
     components: {
     },
     data() {
